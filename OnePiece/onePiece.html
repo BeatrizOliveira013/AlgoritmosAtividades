@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /*  body{
+        background-image: url("https://images3.alphacoders.com/130/1305748.jpg");
+    }
+*/
+    .container {
+        display: flex;
+        justify-content: center;
+        border-color: brown;
+        border-radius: 50%;
+    }
+</style>
+
+<body>
+    <!--
+
+
+
+
+    g.2) Listar todos os minutos do episódio, de 1 minuto até o fim do tempo do episódio. 
+    g.3) Qual o status de cada minuto do episódio assistido, sendo o status:  
+
+        De 1 até 2 minutos – Abertura do Episódio (caso não tenha pulado) 
+
+        Mais de 2 até 22 minutos – Assistindo o Episódio 
+        Mais de 22 até 24 minutos – Encerramento do Episódio (caso não tenha pulado) 
+
+                if(contadorMinuto<=2){
+        var status= 'Abertura do Episodio'}else if(contadorMinuto<=22){
+        status= Assistindo o Episódio}else if(contadorMinuto<=24){
+        status= Encerramento do Episódio}
+
+h) Caso o usuário ainda tenha “tempo disponível” após o episódio atual,
+ exiba o próximo episódio, seguindo as mesmas regras do item g), até encerrar o tempo disponível do usuário. 
+
+i) Ao final da listagem dos episódios, exiba “Você assistiu XX episódios”,
+ sendo XX o número de episódios assistido pelo usuário ao longo do seu tempo disponível. 
+
+
+ div_show.innerHTML=`Você assistiu ${somaEpisodios} episódios`;
+
+ OBS 1: O tempo disponível que o usuário possui para assistir a série vai variar de acordo com a unidade de medida de tempo, 
+ lembrando que 1 hora possui 60 minutos.
+
+
+ var tempoDisponivel= input_tempoDisponivel.value;
+if(unidadeTempo == 'horas'){
+tempoDisponivel = tempoDisponivel /60}
+
+
+
+
+
+  Ou seja, ao ter 5 horas disponíveis, o usuário possui 300 minutos para assistir a episódios.  
+Realize essa conversão do tempo antes mesmo de iniciar as outras validações ou repetições dos 
+episódios/minutos, pois influenciará diretamente no tempo disponível do usuário e quantos episódios ele poderá assistir. 
+
+OBS 2: caso o usuário opte por pular a abertura ou encerramento, o tempo do episódio varia:  
+
+- Ao assistir o episódio todo, a abertura vai de 0 até 2 minutos, o conteúdo do episódio 
+vai de mais de 2 até 22 minutos e o encerramento vai de mais de 23 até 24 minutos (total de 24 minutos). 
+
+
+- Ao pular somente a abertura, o episódio vai de 0 até 20 minutos e o encerramento 
+vai de mais de 20 até 22 minutos (total de 22 minutos). 
+- Ao pular somente o encerramento, a abertura vai de 0 até 2 minutos e o episódio vai
+ de mais de 2 até 22 minutos  (total de 22 minutos). 
+- Ao pular abertura e encerramento, o episódio vai de 0 até 20 minutos, somente (total de 20 minutos). 
+
+OBS 3: Você pode utilizar duas estruturas de repetição, sendo uma para a
+ quantidade de episódios e outra para percorrer os minutos de cada episódio (dentre os status “abertura”, “episódio” e “encerramento”). 
+
+
+  for(var epAtual= epDesejaComecar; epAtual<=tempoDisponivel; epAtual++){
+  div_show.innerHTML=`Episodio:${epAtual}`}
+
+var tempoDoEpisodio=
+  for(var minutoAtual= minutoQueComeça; minutoAtual<=tempoDoEpisodio; minutoAtual++){
+  div_show.innerHTML=`minuto${minutoAtual}: ${status}}
+
+
+OBS 4: Para saber quantos episódios o usuário consegue assistir, deve realizar 
+um cálculo do “tempo disponível” dividido por “tempo do episódio”, que varia caso o usuário 
+pule a abertura ou o encerramento (episódio pode durar 20, 22 ou 24 minutos – completo). 
+
+var qtdEpConsegueAssistir= tempoDisponivel / tempoEpisodio; 
+
+OBS 5: A cada exibição de “Minuto X - status” na listagem do episódio, 
+conte 1 minuto corrido do tempo disponível do usuário, para caso ultrapasse o limite de tempo disponível,
+ pare as repetições no meio do episódio (afinal, o usuário não teve tempo de assistir o episódio todo).  -->
+
+
+    <div id="container">
+
+        <h1>Assistir One Piece</h1>
+        <!--O verdadeiro One Piece é os amigos que fazemos no caminho-->
+
+
+        <p>Digite o episódio que deseja começar (1-1100):</p>
+        <input type="number" id="input_epDesejaComecar" required>
+        <br><br>
+
+
+        <p>Quantidade de tempo disponível:</p>
+        <input type="number" id="input_tempoDisponivel" required>
+        <br><br>
+
+
+        <p>Unidade de medida do tempo:</p>
+        <select id="select_unidadeTempo">
+            <option value="">Selecione uma opção</option>
+            <option value="Minutos">Minutos</option>
+            <option value="Horas">Horas</option>
+        </select>
+        <br><br>
+
+
+        <p>Deseja pular a abertura?</p>
+        <select id="select_pularAbertura">
+            <option value="">Selecione uma opção</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+        <br><br>
+
+
+        <p>Deseja pular o encerramento?</p>
+
+        <select id="select_pularEncerramento">
+            <option value="">Selecione uma opção</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+
+        <br><br>
+
+
+        <button onclick="assistirEpisodios()">Assistir episódios</button>
+        <div id="div_show"></div>
+
+    </div>
+</body>
+
+</html>
+<script>
+    function assistirEpisodios() {
+        let epDesejaComecar = Number(input_epDesejaComecar.value);
+        let tempoDisponivel = Number(input_tempoDisponivel.value);
+        let unidadeTempo = select_unidadeTempo.value;
+        let pularAbertura = select_pularAbertura.value;
+        let pularEncerramento = select_pularEncerramento.value;
+        div_show.innerHTML = ``;
+        let somaMinutos = 0;
+        let somaEpisodios = 0;
+
+
+
+
+        /* 
+        1 loop para o episodio;
+        1 loop para o minuto atual
+        1 condicional para se tem abertura ou nao 
+        1 condicional para se tem fechamento ou nao
+        1 condicional para se é minuto ou horas
+
+        1- terá que ter condicional antes para dizer se a pessoa escolheu, com abertura, ou sem
+           2- a condicional se escolheu irá dizer quanto tempo durará os episodios, oque 
+           ajudará a definir no FOR o limite do loop dos minutos, para dizer se o episodio encerrou;
+
+           3-terá que ter outra condicional que diz se a pessoa escolheu em horas ou minutos para fazer a conversão
+           dependendo da escolha
+           4-*/
+
+        if (epDesejaComecar < 1 || epDesejaComecar > 1100) {
+            alert(`O número do episódio é inválido`)
+        } else {
+            //convertendo para minutos se usuario optar por horas
+            if (unidadeTempo == 'Horas') {
+                tempoDisponivel = tempoDisponivel * 60
+            }
+
+            //descobrindo o tempo do ep
+            var tempoEpisodio = 24;
+            var minutoComeca = 1
+
+            if (pularAbertura == 'Sim' && pularEncerramento == 'Sim') {
+                tempoEpisodio = 20;
+                minutoComeca = 2
+            } else if (pularAbertura == 'Sim' && pularEncerramento == 'Não') {
+                tempoEpisodio = 22
+                minutoComeca = 2
+            } else if (pularAbertura == 'Não' && pularEncerramento == 'Sim') {
+                tempoEpisodio = 22
+            } else if (pularAbertura == 'Não' && pularEncerramento == 'Sim') {
+                tempoEpisodio = 22
+
+            }
+
+            //descobrindo qtd de minutos que ele consegue assistir
+            var qtdEpConsegueAssistir = tempoDisponivel / tempoEpisodio;
+
+
+            //apenas nessa parte meu FOR não rodava pois eu estava fazendo o limite do for = epAtual<=qtdEpConsegueAssistir,
+            // Mas eu consegui perceber que estava comparando errado, se o usuario colocasse 20episodios, e pudesse assistir 3, nunca o for funcionaria,
+            // e eu não conseguia saber como o for "falar a mesma lingua", comparar o mesmo dado,
+            // o insight foi, eu ja tinha o resultado, eu tinha que fazer o for falar a mesma lingua, então tive a ideia dessa variável
+
+
+            var ateQueEpEleConsegueAssistir = epDesejaComecar + qtdEpConsegueAssistir;
+
+
+            for (var epAtual = epDesejaComecar; epAtual < ateQueEpEleConsegueAssistir; epAtual++) {
+
+                div_show.innerHTML += `Episodio:${epAtual}<br>`
+
+                var qtdEpisodiosAssistidos = (ateQueEpEleConsegueAssistir - epAtual)
+
+                for (var minutoAtual = minutoComeca; minutoAtual <= tempoEpisodio; minutoAtual++) {
+                    var status = 'Abertura';
+                    if (minutoAtual > 2) {
+                        status = 'Em andamento'
+                    } else if (minutoAtual > 20 || minutoAtual > 22) {
+                        status = 'encerramento'
+                    }
+                    div_show.innerHTML += `Minuto: ${minutoAtual}: ${status}<br>`
+                    somaMinutos += minutoAtual;
+
+                    if(tempoEpisodio ==tempoDisponivel){
+
+                    }
+                }
+
+            }
+            //soma dos minutos dividido por 20 que é considerado o menor numero pra ser considerado episodio?
+            // soma da quantidade de episodio dividido por 20?
+            // ateQueEpEleConsegueAssistir-epAtual
+
+            div_show.innerHTML += `<br>Fim dos episódios!<br>
+                      Foram assistidos: ${qtdEpConsegueAssistir}`
+        }
+
+    }
+
+    /*if(contadorMinuto<=2){
+          if(contadorMinuto<=22){
+          status= 'Assistindo o Episódio'}else if(contadorMinuto<=24){
+          status= 'Encerramento do Episódio'}}
+  
+  
+          var tempoEpisodio=0;
+              if(pularAbertura== 'sim' && pularEncerramento == 'sim'){
+      var tempoEpisodio = 20;
+  }else if(pularAbertura== 'sim' && pularEncerramento== 'nao'){
+      var tempoEpisodio = 22
+  }else if(pularAbertura== 'nao' && pularEncerramento== 'sim'){
+      var tempoEpisodio = 22}else if(pularAbertura=='nao' && pularEncerramento=='nao'){
+      var tempoEpisodio = 22
+  }
+  
+  
+  */
+
+
+
+
+
+    /*for(var minutoAtual= 0; minutoAtual<=tempoEpisodio; minutoAtual++){
+    
+        var tempoEpisodio=0;
+                if(pularAbertura== 'sim' && pularEncerramento == 'sim'){
+        var tempoEpisodio = 20;
+    }else if(pularAbertura== 'sim' && pularEncerramento== 'nao'){
+        var tempoEpisodio = 22
+    }else if(pularAbertura== 'nao' && pularEncerramento== 'sim'){
+        var tempoEpisodio = 22}else if(pularAbertura=='nao' && pularEncerramento=='nao'){
+        var tempoEpisodio = 22
+    }
+        for(var epAtual= epDesejaComecar; epAtual<=tempoEpisodio; epAtual++){
+    
+    div_show.innerHTML+=`Episódio:${epAtual}<br>`
+    
+    }    
+    
+    
+    
+    div_show.innerHTML+=`Minuto ${minutoAtual}:${status}<br>`
+    
+    */
+
+
+</script>
